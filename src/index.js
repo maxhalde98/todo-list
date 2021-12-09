@@ -1,6 +1,6 @@
 import './style.css';
 import _ from 'lodash';
-import { initialLoad } from "./dom";
+import { initialLoad, updateListMenu } from "./dom";
 
 const todoFactory = (title, description, dueDate, priority) => {
     const getTitle = () => title;
@@ -29,27 +29,36 @@ const todoListFactory = (title) => {
     return {getTitle, addToList, displayList, removeFromList}
 }
 
-const DOMController = () => {
-    const ACTIVE_LIST = todoListFactory('default');
+const myLists = () => {
+    const MY_LISTS = [todoListFactory('default')];
 
-    const getActiveList = () => {
-        return ACTIVE_LIST.getTitle;
+    const addList = (list) => {
+        MY_LISTS.push(todoListFactory(list));
+        updateListMenu();
     }
-
-    const setActiveList = (list) => {
-        ACTIVE_LIST = list;
-    }
+    const getListTitles = () => {
+        const TITLES = [];
+        MY_LISTS.forEach(list => {
+            TITLES.push(list.getTitle());
+        })
+        return TITLES;
+    };
+    return {addList, getListTitles};
 }
+
 const TASK_ONE = todoFactory('Dishes', 'Washing dishes', 'today', 'high');
 
 // TASK_ONE.setPriority('low');
 // console.log(TASK_ONE.getPriority());
 
-const DEFAULT = todoListFactory('default');
-DEFAULT.addToList(TASK_ONE);
-DEFAULT.displayList();
-DEFAULT.removeFromList(TASK_ONE);
-DEFAULT.displayList();
+// const DEFAULT = todoListFactory('default');
+// DEFAULT.addToList(TASK_ONE);
+// DEFAULT.displayList();
+// DEFAULT.removeFromList(TASK_ONE);
+// DEFAULT.displayList();
 
+const MY_LISTS = myLists();
 initialLoad();
+
+export {myLists, MY_LISTS}
 
