@@ -1,7 +1,8 @@
 import './style.css';
-import _ from 'lodash';
+import _, { update } from 'lodash';
 import { initialLoad, updateListMenu } from "./dom";
 
+// factory function to create todo items
 const todoFactory = (title, description, dueDate, priority) => {
     const getTitle = () => title;
     const getDescription = () => description;
@@ -11,29 +12,60 @@ const todoFactory = (title, description, dueDate, priority) => {
     return {getTitle, getDescription, getDueDate, getPriority, setPriority}
 };
 
+// factory function to create todo lists
 const todoListFactory = (title) => {
+    //empty array to hold list items
     const TODO_LIST = [];
-
     const getTitle = () => title;
+    // function to add item to list
     const addToList = (item) => TODO_LIST.push(item);
-    const removeFromList = (item) => {
-        let index = TODO_LIST.indexOf(item);
-        if (index >= 0) {
-            TODO_LIST.splice(index, 1);
+    const isEmpty = () => {
+        if (TODO_LIST.length === 0) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
-    const displayList = () => {TODO_LIST.forEach(todo => {
-        console.log(todo.getTitle());
-    })}
+    // function to remove item from list
+    // const removeFromList = (item) => {
+    //     let index = TODO_LIST.indexOf(item);
+    //     if (index >= 0) {
+    //         TODO_LIST.splice(index, 1);
+    //     }
+    // }
 
-    return {getTitle, addToList, displayList, removeFromList}
+    return {getTitle, addToList, isEmpty}
 }
 
-const myLists = () => {
+// myLists module that is a
+const myLists = (() => {
     const MY_LISTS = [todoListFactory('default')];
-
+    let activeList = MY_LISTS[0];
+    const getActiveListTitle = () => {
+        return activeList.getTitle();
+    }
+    const getActiveList = () => {
+        return activeList;
+    }
+    
     const addList = (list) => {
-        MY_LISTS.push(todoListFactory(list));
+        let index = -1; 
+        MY_LISTS.forEach(curr => {
+            if (curr.getTitle() === list) {index = MY_LISTS.indexOf(curr)};
+        })
+
+        if (index !== -1 && list !== 'default') {
+            MY_LISTS.push(todoListFactory(list));
+            updateListMenu();
+        }
+    }
+    const removeList = (list) => {
+        let index = -1;
+        MY_LISTS.forEach(curr => {
+            if (curr.getTitle() === list) {index = MY_LISTS.indexOf(curr)};
+        })
+        MY_LISTS.splice(index, 1);
         updateListMenu();
     }
     const getListTitles = () => {
@@ -43,8 +75,8 @@ const myLists = () => {
         })
         return TITLES;
     };
-    return {addList, getListTitles};
-}
+    return {addList, getListTitles, removeList, getActiveListTitle, getActiveList};
+})();
 
 const TASK_ONE = todoFactory('Dishes', 'Washing dishes', 'today', 'high');
 
@@ -57,8 +89,8 @@ const TASK_ONE = todoFactory('Dishes', 'Washing dishes', 'today', 'high');
 // DEFAULT.removeFromList(TASK_ONE);
 // DEFAULT.displayList();
 
-const MY_LISTS = myLists();
+
 initialLoad();
 
-export {myLists, MY_LISTS}
+export {myLists}
 

@@ -56,6 +56,7 @@ html, body {
     padding-top: 12px;
     padding-bottom: 12px;
     font-size: 28px;
+    border-bottom: 1px solid gainsboro;
 }
 
 #active-list {
@@ -69,11 +70,12 @@ html, body {
 .list-title {
     width: 15vw;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     padding-top: 12px;
     padding-bottom: 12px;
     font-size: 18px;
     border-bottom: 1px solid gainsboro;
+    text-indent: 12px;
     /* border-top: 1px solid gainsboro; */
 }
 
@@ -83,4 +85,58 @@ html, body {
     height: 38px;
     font-size: 28px;
     margin-bottom: 12px;
+}
+
+.remove-list-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 22px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+}
+
+#active-list-title {
+    width: 60vw;
+    display: flex;
+    justify-content: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 28px;
+    border-bottom: 1px solid gainsboro;
+}
+
+#active-list-items {
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+}
+
+#empty-list-item {
+    width: 60vw;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid gainsboro;
+}
+
+#add-item {
+    width: 60vw;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+}
+
+#add-item-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 22px;
+    margin-left: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
