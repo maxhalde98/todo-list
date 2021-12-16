@@ -28,14 +28,14 @@ const todoListFactory = (title) => {
         }
     }
     // function to remove item from list
-    // const removeFromList = (item) => {
-    //     let index = TODO_LIST.indexOf(item);
-    //     if (index >= 0) {
-    //         TODO_LIST.splice(index, 1);
-    //     }
-    // }
+    const removeFromList = (item) => {
+        let index = TODO_LIST.indexOf(item);
+        if (index >= 0) {
+            TODO_LIST.splice(index, 1);
+        }
+    }
 
-    return {getTitle, addToList, isEmpty}
+    return {getTitle, addToList, isEmpty, removeFromList, TODO_LIST}
 }
 
 // myLists module that is a
@@ -48,6 +48,11 @@ const myLists = (() => {
     const getActiveList = () => {
         return activeList;
     }
+    const setActiveList = (title) => {
+        MY_LISTS.forEach(curr => {
+            if (curr.getTitle() === title) {activeList = curr;}
+        })
+    }
     
     const addList = (list) => {
         let index = -1; 
@@ -55,10 +60,17 @@ const myLists = (() => {
             if (curr.getTitle() === list) {index = MY_LISTS.indexOf(curr)};
         })
 
-        if (index !== -1 && list !== 'default') {
+        if (index === -1 && list !== 'title' && list !== '') {
             MY_LISTS.push(todoListFactory(list));
             updateListMenu();
         }
+        else if (list === 'title' || list === '') {
+            alert('Please enter a valid title.');
+        }
+        else {
+            alert('This list already exists! Please choose another name.')
+        }
+        activeList = MY_LISTS[MY_LISTS.length-1];
     }
     const removeList = (list) => {
         let index = -1;
@@ -66,6 +78,7 @@ const myLists = (() => {
             if (curr.getTitle() === list) {index = MY_LISTS.indexOf(curr)};
         })
         MY_LISTS.splice(index, 1);
+        activeList = MY_LISTS[index-1];
         updateListMenu();
     }
     const getListTitles = () => {
@@ -75,7 +88,7 @@ const myLists = (() => {
         })
         return TITLES;
     };
-    return {addList, getListTitles, removeList, getActiveListTitle, getActiveList};
+    return {addList, getListTitles, removeList, getActiveListTitle, getActiveList, setActiveList};
 })();
 
 const TASK_ONE = todoFactory('Dishes', 'Washing dishes', 'today', 'high');
@@ -92,5 +105,5 @@ const TASK_ONE = todoFactory('Dishes', 'Washing dishes', 'today', 'high');
 
 initialLoad();
 
-export {myLists}
+export {myLists, todoFactory, todoListFactory}
 

@@ -65,6 +65,8 @@ html, body {
     margin-bottom: 28px;
     border-radius: 12px;
     background-color: cornsilk;
+    display: flex;
+    flex-direction: column;
 }
 
 .list-title {
@@ -112,13 +114,14 @@ html, body {
     flex-direction: column;
 }
 
-#empty-list-item {
+.list-item {
     width: 60vw;
     padding-top: 12px;
     padding-bottom: 12px;
     font-size: 18px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     border-bottom: 1px solid gainsboro;
 }
 
@@ -139,4 +142,14 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#add-item-form-div {
+    padding: 32px;
+    background-color:gainsboro;
+    border-radius: 12px;
+    position: absolute;
+    align-self: center;
+    margin-top: 200px;
+    z-index: 1;
 }
